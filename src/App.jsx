@@ -158,9 +158,11 @@ function GaugeChart({ pct = 0, value = '', sublabel = '', label = '', color = '#
           ref={dotRef}
           cx={arcPoint(startAngle).x}
           cy={arcPoint(startAngle).y}
-          r="5"
+          r="6"
           fill={color}
-          style={{ opacity: 0, filter: `drop-shadow(0 0 4px ${color})` }}
+          stroke="#ffffff"
+          strokeWidth="2.5"
+          style={{ opacity: 0, filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.5))' }}
         />
       )}
 
@@ -572,7 +574,7 @@ function App() {
       {/* Header Navigation bar */}
       <nav className="app-navbar">
         <div className="navbar-brand">
-          PLAN2050 <span>PROJECT DEVELOPMENT PROCESS</span>
+          TAC-CLRP-2050 <span>PROJECT DEVELOPMENT PROCESS</span>
         </div>
         <div className="nav-tabs">
           <button

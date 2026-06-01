@@ -607,14 +607,14 @@ body {
 
 .gauge-sub {
   font-family: 'Outfit', sans-serif;
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 600;
   fill: var(--text-muted);
 }
 
 .gauge-label {
   font-family: 'Outfit', sans-serif;
-  font-size: 12px;
+  font-size: 9.5px;
   font-weight: 700;
   fill: var(--text-muted);
   text-transform: uppercase;

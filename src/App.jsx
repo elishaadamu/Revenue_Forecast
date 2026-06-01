@@ -175,8 +175,8 @@ function GaugeChart({ pct = 0, value = '', sublabel = '', label = '', color = '#
           textAnchor="middle"
           style={{
             fill: color,
-            fontSize: '12px',
-            fontWeight: '800',
+            fontSize: '14px',
+            fontWeight: '500',
             opacity: 0,
             fontFamily: "'Outfit', sans-serif"
           }}
@@ -189,7 +189,7 @@ function GaugeChart({ pct = 0, value = '', sublabel = '', label = '', color = '#
       {isPieChartDial ? (
         <>
           {/* Centered Large Count Number inside circle */}
-          <text x={cx} y={cy + 6} textAnchor="middle" style={{ fill: 'var(--text-main)', fontSize: '28px', fontWeight: '800', fontFamily: "'Outfit', sans-serif" }}>{count}</text>
+          <text x={cx} y={cy + 6} textAnchor="middle" style={{ fill: 'var(--text-main)', fontSize: '32px', fontWeight: '500', fontFamily: "'Outfit', sans-serif" }}>{count}</text>
           {/* Muted Label below count */}
           <text x={cx} y={cy + 20} textAnchor="middle" className="gauge-sub">{sublabel}</text>
         </>

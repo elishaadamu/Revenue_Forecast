@@ -188,16 +188,13 @@ function GaugeChart({ pct = 0, value = '', sublabel = '', label = '', color = '#
       {/* Center value layout */}
       {isPieChartDial ? (
         <>
-          {/* Centered Large Count Number inside circle */}
+          {/* Centered Large Count Number inside circle, sublabel text removed */}
           <text x={cx} y={cy + 6} textAnchor="middle" style={{ fill: 'var(--text-main)', fontSize: '32px', fontWeight: '500', fontFamily: "'Outfit', sans-serif" }}>{count}</text>
-          {/* Muted Label below count */}
-          <text x={cx} y={cy + 20} textAnchor="middle" className="gauge-sub">{sublabel}</text>
         </>
       ) : (
         <>
-          <text x={cx} y={cy - 6}  textAnchor="middle" className="gauge-val">{value}</text>
-          <text x={cx} y={cy + 13} textAnchor="middle" className="gauge-sub">{sublabel}</text>
-          <text x={cx} y={cy + 32} textAnchor="middle" className="gauge-label">{label}</text>
+          <text x={cx} y={cy + 0}  textAnchor="middle" className="gauge-val">{value}</text>
+          <text x={cx} y={cy + 22} textAnchor="middle" className="gauge-sub">{sublabel}</text>
         </>
       )}
     </svg>
@@ -234,7 +231,6 @@ function PieChartTab() {
               <span className="section-indicator before-indicator">BEFORE</span>
               <div className="section-meta-pill">Total Cost: ${fmt(BEFORE_TOTAL_COST)}M</div>
             </div>
-            <h2 className="section-title">Original Planning State</h2>
           </div>
 
           {/* 5 Speedometers for Before */}
@@ -261,38 +257,7 @@ function PieChartTab() {
             })}
           </div>
 
-          {/* Detail Table */}
-          <div className="pie-table-wrapper">
-            <table className="pie-details-table">
-              <thead>
-                <tr>
-                  <th>Improvement Type</th>
-                  <th className="num-col">before_cost ($M)</th>
-                  <th className="num-col">before_count</th>
-                  <th className="num-col">before_perc</th>
-                </tr>
-              </thead>
-              <tbody>
-                {BEFORE_PROJECTS.map((item, idx) => (
-                  <tr key={item.type} className={idx % 2 === 0 ? 'row-even' : 'row-odd'}>
-                    <td className="type-cell">
-                      <span className="color-dot" style={{ backgroundColor: BEFORE_COLORS[idx % BEFORE_COLORS.length] }} />
-                      {item.type}
-                    </td>
-                    <td className="num-col">${fmt(item.cost)}</td>
-                    <td className="num-col count-highlight">{item.count}</td>
-                    <td className="num-col perc-highlight">{item.percent}%</td>
-                  </tr>
-                ))}
-                <tr className="row-total">
-                  <td className="total-label">TOTAL</td>
-                  <td className="num-col total-val">${fmt(BEFORE_TOTAL_COST)}</td>
-                  <td className="num-col total-val">{BEFORE_PROJECTS.reduce((acc, curr) => acc + curr.count, 0)}</td>
-                  <td className="num-col total-val">100%</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+
         </section>
 
         {/* ── AFTER STATES PANEL ── */}
@@ -302,7 +267,6 @@ function PieChartTab() {
               <span className="section-indicator after-indicator">AFTER</span>
               <div className="section-meta-pill">Total Cost: ${fmt(AFTER_TOTAL_COST)}M</div>
             </div>
-            <h2 className="section-title">Optimized Planning State</h2>
           </div>
 
           {/* 5 Speedometers for After */}
@@ -329,38 +293,7 @@ function PieChartTab() {
             })}
           </div>
 
-          {/* Detail Table */}
-          <div className="pie-table-wrapper">
-            <table className="pie-details-table">
-              <thead>
-                <tr>
-                  <th>Improvement Type</th>
-                  <th className="num-col">after_cost ($M)</th>
-                  <th className="num-col">after_count</th>
-                  <th className="num-col">after_perc</th>
-                </tr>
-              </thead>
-              <tbody>
-                {AFTER_PROJECTS.map((item, idx) => (
-                  <tr key={item.type} className={idx % 2 === 0 ? 'row-even' : 'row-odd'}>
-                    <td className="type-cell">
-                      <span className="color-dot" style={{ backgroundColor: AFTER_COLORS[idx % AFTER_COLORS.length] }} />
-                      {item.type}
-                    </td>
-                    <td className="num-col">${fmt(item.cost)}</td>
-                    <td className="num-col count-highlight">{item.count}</td>
-                    <td className="num-col perc-highlight">{item.percent}%</td>
-                  </tr>
-                ))}
-                <tr className="row-total">
-                  <td className="total-label">TOTAL</td>
-                  <td className="num-col total-val">${fmt(AFTER_TOTAL_COST)}</td>
-                  <td className="num-col total-val">{AFTER_PROJECTS.reduce((acc, curr) => acc + curr.count, 0)}</td>
-                  <td className="num-col total-val">100%</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+
         </section>
       </div>
     </div>
@@ -485,11 +418,13 @@ function ReportTab() {
             },
           ].map((g) => (
             <div key={g.id} className="gauge-card">
+              <div className="pie-card-header">
+                <span className="pie-card-title">{g.label}</span>
+              </div>
               <GaugeChart
                 pct={g.pct}
                 value={g.value}
                 sublabel={g.sublabel}
-                label={g.label}
                 color={g.color}
               />
             </div>

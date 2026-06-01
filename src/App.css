@@ -627,3 +627,63 @@ body {
   font-size: 20px;
   color: var(--text-muted);
 }
+
+/* ========================================
+   Responsive Media Queries
+   ======================================== */
+
+@media (max-width: 1024px) {
+  .report-tab, .pie-tab-layout {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .nav-tabs {
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  .nav-tabs button {
+    flex: 1;
+    text-align: center;
+  }
+  .report-tab, .pie-tab-layout {
+    padding: 16px;
+  }
+  .pie-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .pie-grid {
+    grid-template-columns: 1fr;
+  }
+  .indicator-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .util-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .pie-title, .report-section-title {
+    font-size: 24px;
+  }
+  .pie-desc, .report-section-desc {
+    font-size: 14px;
+  }
+  .navbar-brand {
+    font-size: 20px;
+  }
+  .navbar-brand span {
+    display: block;
+    margin-left: 0;
+    margin-top: 4px;
+  }
+}

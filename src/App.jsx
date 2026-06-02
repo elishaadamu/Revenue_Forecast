@@ -85,8 +85,8 @@ function GaugeChart({ pct = 0, value = '', sublabel = '', label = '', color = '#
         dot.style.opacity = eased > 0.05 ? '1' : '0';
 
         if (pctTextRef.current) {
-          // Push text outward radially (r + 35 provides a larger gap from the circle sweep line)
-          const textDistance = r + 30;
+          // Push text outward radially closer to the circle sweep line
+          const textDistance = r + 23;
           const tx = cx + textDistance * Math.cos(toRad(currentAngle));
           const ty = cy + textDistance * Math.sin(toRad(currentAngle)) + 3.5;
           pctTextRef.current.setAttribute('x', tx);
@@ -170,12 +170,12 @@ function GaugeChart({ pct = 0, value = '', sublabel = '', label = '', color = '#
       {isPieChartDial && safePct > 0 && (
         <text
           ref={pctTextRef}
-          x={cx + (r + 35) * Math.cos(toRad(startAngle))}
-          y={cy + (r + 35) * Math.sin(toRad(startAngle)) + 3.5}
+          x={cx + (r + 15) * Math.cos(toRad(startAngle))}
+          y={cy + (r + 15) * Math.sin(toRad(startAngle)) + 3.5}
           textAnchor="middle"
           style={{
             fill: color,
-            fontSize: '20px',
+            fontSize: '16px',
             fontWeight: '600',
             opacity: 0,
             fontFamily: "'Outfit', sans-serif"
@@ -205,6 +205,8 @@ function GaugeChart({ pct = 0, value = '', sublabel = '', label = '', color = '#
    PieChartTab – 10 Circle Dials for Before & After metrics
    ============================================================ */
 function PieChartTab() {
+  const [activeSubTab, setActiveSubTab] = useState('before');
+
   const fmt = (v) => {
     if (v === null || v === undefined) return '–';
     return typeof v === 'number' ? v.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : v;
@@ -216,84 +218,104 @@ function PieChartTab() {
 
   return (
     <div className="pie-tab-layout">
-      <div className="pie-sections-container">
-        {/* ── BEFORE STATES PANEL ── */}
-        <section className="pie-section before-section">
-          <div className="pie-section-header">
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'flex-start' }}>
-              <span className="section-indicator before-indicator">BEFORE</span>
-              <div style={{ display: 'flex', gap: '12px' }}>
-                <div className="section-meta-pill">Total Cost: ${fmt(BEFORE_TOTAL_COST)}M</div>
-                <div className="section-meta-pill" style={{ backgroundColor: 'rgba(52, 211, 153, 0.15)', color: '#34d399', border: '1px solid rgba(52, 211, 153, 0.3)' }}>Projects: {BEFORE_PROFITS}</div>
+      {/* Sidebar on the Left */}
+      <aside className="pie-sidebar">
+        <div className="sidebar-group-title">Scenario</div>
+        <div className="sidebar-buttons">
+          <button
+            className={`sidebar-btn btn-before ${activeSubTab === 'before' ? 'active' : ''}`}
+            onClick={() => setActiveSubTab('before')}
+          >
+            <span className="btn-indicator before-dot"></span>
+            <span className="btn-title">Before</span>
+          </button>
+          
+          <button
+            className={`sidebar-btn btn-after ${activeSubTab === 'after' ? 'active' : ''}`}
+            onClick={() => setActiveSubTab('after')}
+          >
+            <span className="btn-indicator after-dot"></span>
+            <span className="btn-title">After</span>
+          </button>
+        </div>
+      </aside>
+
+      {/* Main content area on the Right */}
+      <div className="pie-content">
+        {activeSubTab === 'before' ? (
+          /* ── BEFORE STATES PANEL ── */
+          <section className="pie-section before-section">
+            <div className="pie-section-header">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'flex-start' }}>
+                <div style={{ display: 'flex', gap: '12px' }}>
+                  <div className="section-meta-pill">Total Cost: ${fmt(BEFORE_TOTAL_COST)}M</div>
+                  <div className="section-meta-pill" style={{ backgroundColor: 'rgba(52, 211, 153, 0.15)', color: '#34d399', border: '1px solid rgba(52, 211, 153, 0.3)' }}>Projects: {BEFORE_PROFITS}</div>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* 5 Speedometers for Before */}
-          <div className="pie-grid">
-            {BEFORE_PROJECTS.map((item, idx) => {
-              const color = BEFORE_COLORS[idx % BEFORE_COLORS.length];
-              return (
-                <div key={item.type} className="pie-card before-card" style={{ '--accent-color': color }}>
-                  <div className="pie-card-header">
-                    <span className="pie-card-title">{item.type}</span>
+            {/* 5 Speedometers for Before */}
+            <div className="pie-grid">
+              {BEFORE_PROJECTS.map((item, idx) => {
+                const color = BEFORE_COLORS[idx % BEFORE_COLORS.length];
+                return (
+                  <div key={item.type} className="pie-card before-card" style={{ '--accent-color': color }}>
+                    <div className="pie-card-header">
+                      <span className="pie-card-title">{item.type}</span>
+                    </div>
+                    <div className="pie-card-body">
+                      <GaugeChart
+                        isPieChartDial={true}
+                        pct={item.percent}
+                        count={item.count}
+                        sublabel="before_count"
+                        color={color}
+                        label={item.type}
+                      />
+                    </div>
                   </div>
-                  <div className="pie-card-body">
-                    <GaugeChart
-                      isPieChartDial={true}
-                      pct={item.percent}
-                      count={item.count}
-                      sublabel="before_count"
-                      color={color}
-                      label={item.type}
-                    />
-                  </div>
+                );
+              })}
+            </div>
+          </section>
+        ) : (
+          /* ── AFTER STATES PANEL ── */
+          <section className="pie-section after-section">
+            <div className="pie-section-header">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'flex-start' }}>
+                
+                <div style={{ display: 'flex', gap: '12px' }}>
+                  <div className="section-meta-pill">Total Cost: ${fmt(AFTER_TOTAL_COST)}M</div>
+                  <div className="section-meta-pill" style={{ backgroundColor: 'rgba(52, 211, 153, 0.15)', color: '#34d399', border: '1px solid rgba(52, 211, 153, 0.3)' }}>Projects: {AFTER_PROFITS}</div>
                 </div>
-              );
-            })}
-          </div>
-
-
-        </section>
-
-        {/* ── AFTER STATES PANEL ── */}
-        <section className="pie-section after-section">
-          <div className="pie-section-header">
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'flex-start' }}>
-              <span className="section-indicator after-indicator">AFTER</span>
-              <div style={{ display: 'flex', gap: '12px' }}>
-                <div className="section-meta-pill">Total Cost: ${fmt(AFTER_TOTAL_COST)}M</div>
-                <div className="section-meta-pill" style={{ backgroundColor: 'rgba(52, 211, 153, 0.15)', color: '#34d399', border: '1px solid rgba(52, 211, 153, 0.3)' }}>Projects: {AFTER_PROFITS}</div>
               </div>
             </div>
-          </div>
 
-          {/* 5 Speedometers for After */}
-          <div className="pie-grid">
-            {AFTER_PROJECTS.map((item, idx) => {
-              const color = AFTER_COLORS[idx % AFTER_COLORS.length];
-              return (
-                <div key={item.type} className="pie-card after-card" style={{ '--accent-color': color }}>
-                  <div className="pie-card-header">
-                    <span className="pie-card-title">{item.type}</span>
+            {/* 5 Speedometers for After */}
+            <div className="pie-grid">
+              {AFTER_PROJECTS.map((item, idx) => {
+                const color = AFTER_COLORS[idx % AFTER_COLORS.length];
+                return (
+                  <div key={item.type} className="pie-card after-card" style={{ '--accent-color': color }}>
+                    <div className="pie-card-header">
+                      <span className="pie-card-title">{item.type}</span>
+                    </div>
+                    <div className="pie-card-body">
+                      <GaugeChart
+                        isPieChartDial={true}
+                        pct={item.percent}
+                        count={item.count}
+                        sublabel="after_count"
+                        color={color}
+                        label={item.type}
+                      />
+                    </div>
                   </div>
-                  <div className="pie-card-body">
-                    <GaugeChart
-                      isPieChartDial={true}
-                      pct={item.percent}
-                      count={item.count}
-                      sublabel="after_count"
-                      color={color}
-                      label={item.type}
-                    />
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-
-        </section>
+                );
+              })}
+            </div>
+          </section>
+        )}
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ export const BEFORE_PROJECTS = [
 ];
 
 export const BEFORE_TOTAL_COST = 1241.15;
+export const BEFORE_PROFITS = 116;
 
 export const AFTER_PROJECTS = [
   { type: 'Road Widening', cost: 126.38, count: 3, percent: 25 },
@@ -17,3 +18,4 @@ export const AFTER_PROJECTS = [
 ];
 
 export const AFTER_TOTAL_COST = 496.99;
+export const AFTER_PROFITS = 61;

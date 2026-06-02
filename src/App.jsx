@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import { useRevenueData } from './useRevenueData';
-import { BEFORE_PROJECTS, BEFORE_TOTAL_COST, AFTER_PROJECTS, AFTER_TOTAL_COST } from './pieChartData';
+import { BEFORE_PROJECTS, BEFORE_TOTAL_COST, BEFORE_PROFITS, AFTER_PROJECTS, AFTER_TOTAL_COST, AFTER_PROFITS } from './pieChartData';
 
 /* ============================================================
    GaugeChart – SVG arc speedometer dial
@@ -216,17 +216,16 @@ function PieChartTab() {
 
   return (
     <div className="pie-tab-layout">
-      {/* Tab Header Banner */}
-      <div className="pie-tab-header">
-      </div>
-
       <div className="pie-sections-container">
         {/* ── BEFORE STATES PANEL ── */}
         <section className="pie-section before-section">
           <div className="pie-section-header">
             <div className="indicator-row">
               <span className="section-indicator before-indicator">BEFORE</span>
-              <div className="section-meta-pill">Total Cost: ${fmt(BEFORE_TOTAL_COST)}M</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', alignItems: 'flex-end' }}>
+                <div className="section-meta-pill">Total Cost: ${fmt(BEFORE_TOTAL_COST)}M</div>
+                <div className="section-meta-pill" style={{ backgroundColor: 'rgba(52, 211, 153, 0.15)', color: '#34d399', border: '1px solid rgba(52, 211, 153, 0.3)', marginTop: '8px' }}>Profits: ${fmt(BEFORE_PROFITS)}M</div>
+              </div>
             </div>
           </div>
 
@@ -262,7 +261,10 @@ function PieChartTab() {
           <div className="pie-section-header">
             <div className="indicator-row">
               <span className="section-indicator after-indicator">AFTER</span>
-              <div className="section-meta-pill">Total Cost: ${fmt(AFTER_TOTAL_COST)}M</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', alignItems: 'flex-end' }}>
+                <div className="section-meta-pill">Total Cost: ${fmt(AFTER_TOTAL_COST)}M</div>
+                <div className="section-meta-pill" style={{ backgroundColor: 'rgba(52, 211, 153, 0.15)', color: '#34d399', border: '1px solid rgba(52, 211, 153, 0.3)', marginTop: '8px' }}>Profits: ${fmt(AFTER_PROFITS)}M</div>
+              </div>
             </div>
           </div>
 
@@ -358,9 +360,9 @@ function ReportTab() {
         <div className="report-section-header">
           <span className="report-section-badge util-badge">DYNAMIC REPORTS</span>
           <div className="util-header-row">
-            <h2 className="report-section-title">Revenue Source Forecasts</h2>
+            <h2 className="report-section-title">Revenue Source</h2>
             <div className="dropdown-wrapper">
-              <label className="dropdown-label" htmlFor="revenue-select">Select Revenue Source</label>
+              <label className="dropdown-label" htmlFor="revenue-select"></label>
               <select
                 id="revenue-select"
                 className="revenue-dropdown"
@@ -382,15 +384,15 @@ function ReportTab() {
               id: 'orig',
               label: 'Original',
               value: `$${fmt(totalVals[0])}M`,
-              sublabel: '100%',
+              sublabel: '',
               pct: 100,
               color: '#a78bfa',
             },
             {
               id: 'yoe',
-              label: 'YOE 90% Cap',
+              label: '90% Cap',
               value: `$${fmt(totalVals[1])}M`,
-              sublabel: totalVals[0] > 0 ? `${((totalVals[1] / totalVals[0]) * 100).toFixed(1)}%` : '–',
+              sublabel: '',
               pct: totalVals[0] > 0 ? (totalVals[1] / totalVals[0]) * 100 : 0,
               color: '#a78bfa',
             },
@@ -398,7 +400,7 @@ function ReportTab() {
               id: 'prog',
               label: 'Programmed',
               value: `$${fmt(totalVals[2])}M`,
-              sublabel: totalVals[0] > 0 ? `${((totalVals[2] / totalVals[0]) * 100).toFixed(1)}%` : '–',
+              sublabel: '',
               pct: totalVals[0] > 0 ? (totalVals[2] / totalVals[0]) * 100 : 0,
               color: '#a78bfa',
             },
@@ -406,7 +408,7 @@ function ReportTab() {
               id: 'util',
               label: 'Utilization',
               value: `${fmt(totalVals[3])}`,
-              sublabel: 'Completed',
+              sublabel: '',
               pct: totalVals[3],
               color: '#a78bfa',
             },
@@ -431,10 +433,10 @@ function ReportTab() {
             <thead>
               <tr>
                 <th className="col-year">Year</th>
-                <th className="col-sub">{selectedRevenue}_Original ($M)</th>
-                <th className="col-sub">{selectedRevenue}_YOE_90%_Cap ($M)</th>
-                <th className="col-sub">{selectedRevenue}_Programmed ($M)</th>
-                <th className="col-sub col-util">{selectedRevenue}_Utilization_%</th>
+                <th className="col-sub">Original</th>
+                <th className="col-sub">90% Cap</th>
+                <th className="col-sub">Programmed</th>
+                <th className="col-sub col-util">Utilization</th>
               </tr>
             </thead>
             <tbody>

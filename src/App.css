@@ -129,7 +129,7 @@ body {
 }
 
 .pie-tab-layout {
-  padding: 48px;
+  padding: 24px 48px 48px;
   display: flex;
   flex-direction: column;
   gap: 40px;
@@ -386,7 +386,7 @@ body {
 }
 
 .report-tab {
-  padding: 48px;
+  padding: 24px 48px 48px;
   display: flex;
   flex-direction: column;
   gap: 48px;

@@ -222,11 +222,11 @@ body {
 }
 
 .section-meta-pill {
-  font-size: 14px;
-  font-weight: 400;
+  font-size: 22px;
+  font-weight: 600;
   color: #fcd34d;
   background: rgba(245, 158, 11, 0.15);
-  padding: 4px 12px;
+  padding: 8px 18px;
   border-radius: 6px;
 }
 
@@ -240,7 +240,7 @@ body {
 /* -- Speedometer Grid & Cards -- */
 .pie-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 24px;
 }
 
@@ -258,7 +258,7 @@ body {
 
 .pie-card-header {
   width: 100%;
-  padding: 8px;
+  padding: 8px 12px;
   border-radius: 6px;
   background: var(--bg-app);
   border: 1px solid var(--border-color);
@@ -267,13 +267,16 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: 72px;
 }
 
 .pie-card-title {
-  font-size: 15px;
-  font-weight: 400;
+  font-size: 18px;
+  font-weight: 500;
   color: var(--text-main);
   line-height: 1.3;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .pie-card-body {
@@ -411,6 +414,17 @@ body {
   align-items: center;
   gap: 24px;
   flex-wrap: wrap;
+}
+
+.report-section-indicator {
+  display: inline-block;
+  padding: 8px 20px;
+  border-radius: 9999px;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .report-section-badge {

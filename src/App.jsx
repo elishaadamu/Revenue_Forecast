@@ -85,8 +85,8 @@ function GaugeChart({ pct = 0, value = '', sublabel = '', label = '', color = '#
         dot.style.opacity = eased > 0.05 ? '1' : '0';
 
         if (pctTextRef.current) {
-          // Push text outward radially (r + 20 provides exactly a 20px gap from the circle sweep line)
-          const textDistance = r + 20;
+          // Push text outward radially (r + 35 provides a larger gap from the circle sweep line)
+          const textDistance = r + 30;
           const tx = cx + textDistance * Math.cos(toRad(currentAngle));
           const ty = cy + textDistance * Math.sin(toRad(currentAngle)) + 3.5;
           pctTextRef.current.setAttribute('x', tx);
@@ -170,13 +170,13 @@ function GaugeChart({ pct = 0, value = '', sublabel = '', label = '', color = '#
       {isPieChartDial && safePct > 0 && (
         <text
           ref={pctTextRef}
-          x={cx + (r + 20) * Math.cos(toRad(startAngle))}
-          y={cy + (r + 20) * Math.sin(toRad(startAngle)) + 3.5}
+          x={cx + (r + 35) * Math.cos(toRad(startAngle))}
+          y={cy + (r + 35) * Math.sin(toRad(startAngle)) + 3.5}
           textAnchor="middle"
           style={{
             fill: color,
-            fontSize: '14px',
-            fontWeight: '500',
+            fontSize: '20px',
+            fontWeight: '600',
             opacity: 0,
             fontFamily: "'Outfit', sans-serif"
           }}
@@ -220,11 +220,11 @@ function PieChartTab() {
         {/* ── BEFORE STATES PANEL ── */}
         <section className="pie-section before-section">
           <div className="pie-section-header">
-            <div className="indicator-row">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'flex-start' }}>
               <span className="section-indicator before-indicator">BEFORE</span>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', alignItems: 'flex-end' }}>
+              <div style={{ display: 'flex', gap: '12px' }}>
                 <div className="section-meta-pill">Total Cost: ${fmt(BEFORE_TOTAL_COST)}M</div>
-                <div className="section-meta-pill" style={{ backgroundColor: 'rgba(52, 211, 153, 0.15)', color: '#34d399', border: '1px solid rgba(52, 211, 153, 0.3)', marginTop: '8px' }}>Profits: ${fmt(BEFORE_PROFITS)}M</div>
+                <div className="section-meta-pill" style={{ backgroundColor: 'rgba(52, 211, 153, 0.15)', color: '#34d399', border: '1px solid rgba(52, 211, 153, 0.3)' }}>Projects: {BEFORE_PROFITS}</div>
               </div>
             </div>
           </div>
@@ -259,11 +259,11 @@ function PieChartTab() {
         {/* ── AFTER STATES PANEL ── */}
         <section className="pie-section after-section">
           <div className="pie-section-header">
-            <div className="indicator-row">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'flex-start' }}>
               <span className="section-indicator after-indicator">AFTER</span>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', alignItems: 'flex-end' }}>
+              <div style={{ display: 'flex', gap: '12px' }}>
                 <div className="section-meta-pill">Total Cost: ${fmt(AFTER_TOTAL_COST)}M</div>
-                <div className="section-meta-pill" style={{ backgroundColor: 'rgba(52, 211, 153, 0.15)', color: '#34d399', border: '1px solid rgba(52, 211, 153, 0.3)', marginTop: '8px' }}>Profits: ${fmt(AFTER_PROFITS)}M</div>
+                <div className="section-meta-pill" style={{ backgroundColor: 'rgba(52, 211, 153, 0.15)', color: '#34d399', border: '1px solid rgba(52, 211, 153, 0.3)' }}>Projects: {AFTER_PROFITS}</div>
               </div>
             </div>
           </div>
@@ -383,7 +383,7 @@ function ReportTab() {
             {
               id: 'orig',
               label: 'Original',
-              value: `$${fmt(totalVals[0])}M`,
+              value: `$${Math.round(totalVals[0])}M`,
               sublabel: '',
               pct: 100,
               color: '#a78bfa',
@@ -391,7 +391,7 @@ function ReportTab() {
             {
               id: 'yoe',
               label: '90% Cap',
-              value: `$${fmt(totalVals[1])}M`,
+              value: `$${Math.round(totalVals[1])}M`,
               sublabel: '',
               pct: totalVals[0] > 0 ? (totalVals[1] / totalVals[0]) * 100 : 0,
               color: '#a78bfa',
@@ -399,7 +399,7 @@ function ReportTab() {
             {
               id: 'prog',
               label: 'Programmed',
-              value: `$${fmt(totalVals[2])}M`,
+              value: `$${Math.round(totalVals[2])}M`,
               sublabel: '',
               pct: totalVals[0] > 0 ? (totalVals[2] / totalVals[0]) * 100 : 0,
               color: '#a78bfa',
@@ -407,7 +407,7 @@ function ReportTab() {
             {
               id: 'util',
               label: 'Utilization',
-              value: `${fmt(totalVals[3])}`,
+              value: `${totalVals[3].toFixed(1)}`,
               sublabel: '',
               pct: totalVals[3],
               color: '#a78bfa',

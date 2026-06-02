@@ -210,17 +210,14 @@ function PieChartTab() {
     return typeof v === 'number' ? v.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : v;
   };
 
-  // Curated premium HSL-tailored gradient colors
-  const BEFORE_COLORS = ['#6c8ef5', '#a78bfa', '#34d399', '#f43f5e', '#fbbf24'];
-  const AFTER_COLORS  = ['#a78bfa', '#34d399', '#6c8ef5', '#fbbf24', '#f43f5e'];
+  // Consistent blue for Before, consistent green for After
+  const BEFORE_COLORS = ['#60a5fa', '#60a5fa', '#60a5fa', '#60a5fa', '#60a5fa'];
+  const AFTER_COLORS  = ['#34d399', '#34d399', '#34d399', '#34d399', '#34d399'];
 
   return (
     <div className="pie-tab-layout">
       {/* Tab Header Banner */}
       <div className="pie-tab-header">
-        <span className="pie-badge">PROJECT METRICS</span>
-        <h1 className="pie-title">Improvement Type Distribution</h1>
-        <p className="pie-desc">Before & After project counts mapped to circular speedometers · Highlighting count and total volume shares</p>
       </div>
 
       <div className="pie-sections-container">
@@ -376,9 +373,6 @@ function ReportTab() {
               </select>
             </div>
           </div>
-          <p className="report-section-desc">
-            Showing dynamic forecast data for: <strong>{selectedRevenue}</strong> · Parsed from revenue_forecast.xlsx
-          </p>
         </div>
 
         {/* Dynamic speedometer dials for the picked source */}
@@ -390,7 +384,7 @@ function ReportTab() {
               value: `$${fmt(totalVals[0])}M`,
               sublabel: '100%',
               pct: 100,
-              color: '#6c8ef5',
+              color: '#a78bfa',
             },
             {
               id: 'yoe',
@@ -406,7 +400,7 @@ function ReportTab() {
               value: `$${fmt(totalVals[2])}M`,
               sublabel: totalVals[0] > 0 ? `${((totalVals[2] / totalVals[0]) * 100).toFixed(1)}%` : '–',
               pct: totalVals[0] > 0 ? (totalVals[2] / totalVals[0]) * 100 : 0,
-              color: '#34d399',
+              color: '#a78bfa',
             },
             {
               id: 'util',
@@ -414,7 +408,7 @@ function ReportTab() {
               value: `${fmt(totalVals[3])}`,
               sublabel: 'Completed',
               pct: totalVals[3],
-              color: totalVals[3] >= 90 ? '#34d399' : totalVals[3] >= 50 ? '#fbbf24' : '#f87171',
+              color: '#a78bfa',
             },
           ].map((g) => (
             <div key={g.id} className="gauge-card">
@@ -454,14 +448,14 @@ function ReportTab() {
                     <td className="data-cell">{fmt(prog)}</td>
                     <td className={`data-cell util-cell`}>
                       <div className="util-gauge-inline">
-                        <span className={`util-pct-text ${utilClass(util)}`}>{fmtPct(util)}</span>
+                        <span className="util-pct-text" style={{ color: '#a78bfa' }}>{fmtPct(util)}</span>
                         <svg viewBox="0 0 100 12" className="util-arc-bar" aria-hidden="true">
-                          <rect x="0" y="4" width="100" height="4" rx="2" fill="rgba(0,0,0,0.07)" />
+                          <rect x="0" y="4" width="100" height="4" rx="2" fill="rgba(255,255,255,0.05)" />
                           <rect
                             x="0" y="4"
                             width={Math.min(util, 100)}
                             height="4" rx="2"
-                            fill={util >= 90 ? '#34d399' : util >= 50 ? '#fbbf24' : '#f87171'}
+                            fill="#a78bfa"
                           />
                         </svg>
                       </div>
@@ -475,16 +469,16 @@ function ReportTab() {
                 <td className="data-cell total-cell">{fmt(totalVals[0])}</td>
                 <td className="data-cell total-cell">{fmt(totalVals[1])}</td>
                 <td className="data-cell total-cell">{fmt(totalVals[2])}</td>
-                <td className={`data-cell total-cell util-cell ${utilClass(totalVals[3])}`}>
+                <td className="data-cell total-cell util-cell">
                   <div className="util-gauge-inline">
-                    <span className={`util-pct-text ${utilClass(totalVals[3])}`}>{fmtPct(totalVals[3])}</span>
+                    <span className="util-pct-text" style={{ color: '#a78bfa' }}>{fmtPct(totalVals[3])}</span>
                     <svg viewBox="0 0 100 12" className="util-arc-bar" aria-hidden="true">
-                      <rect x="0" y="4" width="100" height="4" rx="2" fill="rgba(0,0,0,0.07)" />
+                      <rect x="0" y="4" width="100" height="4" rx="2" fill="rgba(255,255,255,0.05)" />
                       <rect
                         x="0" y="4"
                         width={Math.min(totalVals[3], 100)}
                         height="4" rx="2"
-                        fill={totalVals[3] >= 90 ? '#34d399' : totalVals[3] >= 50 ? '#fbbf24' : '#f87171'}
+                        fill="#a78bfa"
                       />
                     </svg>
                   </div>
@@ -509,7 +503,7 @@ function App() {
       {/* Header Navigation bar */}
       <nav className="app-navbar">
         <div className="navbar-brand">
-          TAC-CLRP-2050 <span>PROJECT DEVELOPMENT PROCESS</span>
+          CLRP-2050 Summary Report
         </div>
         <div className="nav-tabs">
           <button
@@ -517,14 +511,14 @@ function App() {
             className={`nav-tab ${activeTab === 'pie' ? 'nav-tab-active' : ''}`}
             onClick={() => setActiveTab('pie')}
           >
-            Pie Chart
+            Allocation
           </button>
           <button
             id="tab-report"
             className={`nav-tab ${activeTab === 'report' ? 'nav-tab-active' : ''}`}
             onClick={() => setActiveTab('report')}
           >
-            Reports
+            Utilization
           </button>
         </div>
       </nav>

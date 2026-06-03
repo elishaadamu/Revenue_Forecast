@@ -10,12 +10,12 @@ export const BEFORE_TOTAL_COST = 1241.15;
 export const BEFORE_PROFITS = 116;
 
 export const AFTER_PROJECTS = [
-  { type: 'Road Widening', cost: 126.38, count: 3, percent: 25 },
-  { type: 'Interchange Modification', cost: 113.74, count: 17, percent: 23 },
-  { type: 'Replacement/Rehabilitation', cost: 107.81, count: 6, percent: 22 },
-  { type: 'Multimodal Corridor Improvements', cost: 81.60, count: 7, percent: 16 },
-  { type: 'Operational & Safety Improvements', cost: 57.81, count: 22, percent: 12 },
+  { type: 'Interchange Modification', cost: 240.81, count: 18, percent: 34 },
+  { type: 'Road Widening', cost: 200.37, count: 4, percent: 28 },
+  { type: 'Replacement/Rehabilitation', cost: 107.81, count: 6, percent: 15 },
+  { type: 'Multimodal Corridor Improvements', cost: 85.20, count: 8, percent: 12 },
+  { type: 'Operational & Safety Improvements', cost: 60.13, count: 23, percent: 8 },
 ];
 
-export const AFTER_TOTAL_COST = 496.99;
-export const AFTER_PROFITS = 61;
+export const AFTER_TOTAL_COST = 709.33;
+export const AFTER_PROFITS = 66;

@@ -129,7 +129,7 @@ body {
 }
 
 .pie-tab-layout {
-  padding: 32px 48px 48px;
+  padding: 32px 48px 0px;
   display: flex;
   flex-direction: row; /* Sidebar left, content right */
   gap: 32px;
@@ -838,7 +838,7 @@ body {
 
 .key-changes-title {
   font-family: 'Outfit', sans-serif;
-  font-size: 22px;
+  font-size: 30px;
   font-weight: 600;
   color: var(--text-main);
   margin: 0;

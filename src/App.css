@@ -48,10 +48,10 @@ body {
 
 /* ---- Navbar ---- */
 .app-navbar {
-  min-height: 64px;
+  min-height: 52px;
   display: flex;
   align-items: center;
-  padding: 0 32px;
+  padding: 0 24px;
   gap: 24px;
   background: var(--bg-nav);
   border-bottom: 1px solid var(--border-color);
@@ -129,10 +129,10 @@ body {
 }
 
 .pie-tab-layout {
-  padding: 32px 48px 0px;
+  padding: 24px 32px 0px;
   display: flex;
   flex-direction: row; /* Sidebar left, content right */
-  gap: 32px;
+  gap: 24px;
   max-width: 1600px;
   margin: 0 auto;
   align-items: flex-start;
@@ -144,9 +144,9 @@ body {
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
   position: sticky;
-  top: 32px;
+  top: 8px;
 }
 
 .sidebar-group-title {
@@ -168,7 +168,7 @@ body {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: 6px;
-  padding: 8px 12px;
+  padding: 6px 10px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -298,11 +298,11 @@ body {
 .pie-section {
   background: var(--bg-section);
   border: 1px solid var(--border-color);
-  border-radius: 16px;
-  padding: 32px;
+  border-radius: 12px;
+  padding: 24px 28px;
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 20px;
   box-shadow: var(--shadow-sm);
 }
 
@@ -344,7 +344,7 @@ body {
   font-weight: 600;
   color: #fcd34d;
   background: rgba(245, 158, 11, 0.15);
-  padding: 8px 18px;
+  padding: 4px 12px;
   border-radius: 6px;
 }
 
@@ -367,7 +367,7 @@ body {
   border: 1px solid var(--border-color);
   border-top: 4px solid var(--accent-color, #6c8ef5);
   border-radius: 12px;
-  padding: 16px;
+  padding: 16px 18px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -376,7 +376,7 @@ body {
 
 .pie-card-header {
   width: 100%;
-  padding: 8px 12px;
+  padding: 6px 10px;
   border-radius: 6px;
   background: var(--bg-app);
   border: 1px solid var(--border-color);
@@ -385,7 +385,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 72px;
+  min-height: 68px;
 }
 
 .pie-card-title {
@@ -725,7 +725,7 @@ body {
 
 .gauge-svg {
   width: 100%;
-  max-width: 220px;
+  max-width: 150px;
   height: auto;
   overflow: visible;
 }
@@ -824,15 +824,15 @@ body {
    Key Changes Section
    ============================================================ */
 .key-changes-section {
-  margin-top: 32px;
+  margin-top: 20px;
   background: var(--bg-section);
   border: 1px solid var(--border-color);
-  border-radius: 16px;
-  padding: 32px;
+  border-radius: 12px;
+  padding: 24px 28px;
   box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 20px;
   animation: fadeIn 0.5s ease-out;
 }
 
@@ -847,13 +847,16 @@ body {
 
 .key-changes-grid {
   display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap: 24px;
+  grid-template-columns: 1fr 1.8fr;
+  gap: 16px;
 }
 
 @media (max-width: 900px) {
   .key-changes-grid {
     grid-template-columns: 1fr;
+  }
+  .shifts-card-container {
+    grid-template-columns: 1fr !important;
   }
 }
 
@@ -862,15 +865,15 @@ body {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: 12px;
-  padding: 24px;
+  padding: 16px 20px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
 }
 
 .card-subtitle {
   font-family: 'Outfit', sans-serif;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--text-muted);
   text-transform: uppercase;
@@ -889,17 +892,17 @@ body {
 .metrics-comparison-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 15px;
+  font-size: 17px;
 }
 
 .metrics-comparison-table th {
   background: var(--bg-card);
   color: var(--text-muted);
   font-weight: 500;
-  padding: 14px 18px;
+  padding: 8px 12px;
   border-bottom: 2px solid var(--border-color);
   text-align: right;
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: 0.5px;
   text-transform: uppercase;
 }
@@ -909,7 +912,7 @@ body {
 }
 
 .metrics-comparison-table td {
-  padding: 16px 18px;
+  padding: 12px 14px;
   border-bottom: 1px solid var(--border-light);
   text-align: right;
   color: var(--text-main);
@@ -939,19 +942,19 @@ body {
 
 /* Shifts Container */
 .shifts-card-container {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
 }
 
 .shift-category-card {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: 12px;
-  padding: 18px 24px;
+  padding: 14px 18px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
   transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.2s ease;
 }
 
@@ -966,7 +969,7 @@ body {
 }
 
 .shift-badge {
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -1009,12 +1012,12 @@ body {
   padding: 0;
   list-style: none;
   color: var(--text-muted);
-  font-size: 14.5px;
-  line-height: 1.6;
+  font-size: 16px;
+  line-height: 1.4;
 }
 
 .shift-list li {
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .shift-list li:last-child {

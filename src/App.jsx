@@ -86,7 +86,7 @@ function GaugeChart({ pct = 0, value = '', sublabel = '', label = '', color = '#
 
         if (pctTextRef.current) {
           // Push text outward radially closer to the circle sweep line
-          const textDistance = r + 23;
+          const textDistance = r + 30;
           const tx = cx + textDistance * Math.cos(toRad(currentAngle));
           const ty = cy + textDistance * Math.sin(toRad(currentAngle)) + 3.5;
           pctTextRef.current.setAttribute('x', tx);
@@ -170,13 +170,13 @@ function GaugeChart({ pct = 0, value = '', sublabel = '', label = '', color = '#
       {isPieChartDial && safePct > 0 && (
         <text
           ref={pctTextRef}
-          x={cx + (r + 15) * Math.cos(toRad(startAngle))}
-          y={cy + (r + 15) * Math.sin(toRad(startAngle)) + 3.5}
+          x={cx + (r + 22) * Math.cos(toRad(startAngle))}
+          y={cy + (r + 22) * Math.sin(toRad(startAngle)) + 3.5}
           textAnchor="middle"
           style={{
             fill: color,
-            fontSize: '16px',
-            fontWeight: '600',
+            fontSize: '22px',
+            fontWeight: '700',
             opacity: 0,
             fontFamily: "'Outfit', sans-serif"
           }}
@@ -247,11 +247,9 @@ function PieChartTab() {
           /* ── BEFORE STATES PANEL ── */
           <section className="pie-section before-section">
             <div className="pie-section-header">
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'flex-start' }}>
-                <div style={{ display: 'flex', gap: '12px' }}>
-                  <div className="section-meta-pill">Total Cost: ${fmt(BEFORE_TOTAL_COST)}M</div>
-                  <div className="section-meta-pill" style={{ backgroundColor: 'rgba(52, 211, 153, 0.15)', color: '#34d399', border: '1px solid rgba(52, 211, 153, 0.3)' }}>Projects: {BEFORE_PROFITS}</div>
-                </div>
+              <div style={{ display: 'flex', gap: '12px' }}>
+                <div className="section-meta-pill">Total Cost: ${fmt(BEFORE_TOTAL_COST)}M</div>
+                <div className="section-meta-pill" style={{ backgroundColor: 'rgba(52, 211, 153, 0.15)', color: '#34d399', border: '1px solid rgba(52, 211, 153, 0.3)' }}>Projects: {BEFORE_PROFITS}</div>
               </div>
             </div>
 
@@ -283,12 +281,9 @@ function PieChartTab() {
           /* ── AFTER STATES PANEL ── */
           <section className="pie-section after-section">
             <div className="pie-section-header">
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'flex-start' }}>
-                
-                <div style={{ display: 'flex', gap: '12px' }}>
-                  <div className="section-meta-pill">Total Cost: ${fmt(AFTER_TOTAL_COST)}M</div>
-                  <div className="section-meta-pill" style={{ backgroundColor: 'rgba(52, 211, 153, 0.15)', color: '#34d399', border: '1px solid rgba(52, 211, 153, 0.3)' }}>Projects: {AFTER_PROFITS}</div>
-                </div>
+              <div style={{ display: 'flex', gap: '12px' }}>
+                <div className="section-meta-pill">Total Cost: ${fmt(AFTER_TOTAL_COST)}M</div>
+                <div className="section-meta-pill" style={{ backgroundColor: 'rgba(52, 211, 153, 0.15)', color: '#34d399', border: '1px solid rgba(52, 211, 153, 0.3)' }}>Projects: {AFTER_PROFITS}</div>
               </div>
             </div>
 

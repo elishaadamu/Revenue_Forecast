@@ -209,7 +209,12 @@ function PieChartTab() {
 
   const fmt = (v) => {
     if (v === null || v === undefined) return '–';
-    return typeof v === 'number' ? v.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : v;
+    return typeof v === 'number'
+      ? v.toLocaleString('en-US', {
+          minimumFractionDigits: Number.isInteger(v) ? 0 : 2,
+          maximumFractionDigits: Number.isInteger(v) ? 0 : 2
+        })
+      : v;
   };
 
   // Consistent blue for Before, consistent green for After
@@ -336,9 +341,9 @@ function PieChartTab() {
                 <tbody>
                   <tr>
                     <td className="metric-name">Total Cost</td>
-                    <td>$1,241</td>
-                    <td>$710</td>
-                    <td className="metric-change negative">-$532</td>
+                    <td>${fmt(BEFORE_TOTAL_COST)}</td>
+                    <td>${fmt(AFTER_TOTAL_COST)}</td>
+                    <td className="metric-change negative">-${fmt(BEFORE_TOTAL_COST - AFTER_TOTAL_COST)}</td>
                   </tr>
                   <tr>
                     <td className="metric-name">Total # of Projects</td>
@@ -406,12 +411,16 @@ function ReportTab() {
 
   const fmt = (v) => {
     if (v === null || v === undefined) return '–';
-    return typeof v === 'number' ? v.toFixed(2) : v;
+    return typeof v === 'number'
+      ? (Number.isInteger(v) ? v.toString() : v.toFixed(2))
+      : v;
   };
 
   const fmtPct = (v) => {
     if (v === null || v === undefined) return '–';
-    return typeof v === 'number' ? v.toFixed(2) + '%' : v;
+    return typeof v === 'number'
+      ? (Number.isInteger(v) ? v.toString() + '%' : v.toFixed(2) + '%')
+      : v;
   };
 
   const utilClass = (pct) => {
@@ -488,14 +497,6 @@ function ReportTab() {
               color: '#a78bfa',
             },
             {
-              id: 'prog',
-              label: 'Programmed',
-              value: `$${Math.round(totalVals[2])}M`,
-              sublabel: '',
-              pct: totalVals[0] > 0 ? (totalVals[2] / totalVals[0]) * 100 : 0,
-              color: '#a78bfa',
-            },
-            {
               id: 'util',
               label: 'Utilization',
               value: `${totalVals[3].toFixed(1)}`,
@@ -526,7 +527,6 @@ function ReportTab() {
                 <th className="col-year">Year</th>
                 <th className="col-sub">Original</th>
                 <th className="col-sub">90% Cap</th>
-                <th className="col-sub">Programmed</th>
                 <th className="col-sub col-util">Utilization</th>
               </tr>
             </thead>
@@ -538,7 +538,6 @@ function ReportTab() {
                     <td className="col-year-cell">{row.year}</td>
                     <td className="data-cell">{fmt(orig)}</td>
                     <td className="data-cell">{fmt(yoe)}</td>
-                    <td className="data-cell">{fmt(prog)}</td>
                     <td className={`data-cell util-cell`}>
                       <div className="util-gauge-inline">
                         <span className="util-pct-text" style={{ color: '#a78bfa' }}>{fmtPct(util)}</span>
@@ -561,7 +560,6 @@ function ReportTab() {
                 <td className="col-year-cell total-label">TOTAL</td>
                 <td className="data-cell total-cell">{fmt(totalVals[0])}</td>
                 <td className="data-cell total-cell">{fmt(totalVals[1])}</td>
-                <td className="data-cell total-cell">{fmt(totalVals[2])}</td>
                 <td className="data-cell total-cell util-cell">
                   <div className="util-gauge-inline">
                     <span className="util-pct-text" style={{ color: '#a78bfa' }}>{fmtPct(totalVals[3])}</span>
@@ -581,6 +579,160 @@ function ReportTab() {
           </table>
         </div>
       </div>
+    </div>
+  );
+}
+
+/* ============================================================
+   FiscalConstraintTab – Summary Fiscal Constraint View
+   ============================================================ */
+function FiscalConstraintTab() {
+  return (
+    <div className="fiscal-tab-full">
+      <section className="fiscal-section">
+        <div className="fiscal-section-header">
+          <h3 className="fiscal-section-title">Summary Fiscal Constraint</h3>
+        </div>
+
+        <div className="fiscal-table-wrapper full-width">
+          <table className="fiscal-table">
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th>2033-38</th>
+                <th>2039-44</th>
+                <th>2045-50</th>
+                <th>TOTAL</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="metric-name">CLRP Projects</td>
+                <td>206.19</td>
+                <td>199.05</td>
+                <td>312.73</td>
+                <td className="total-highlight">717.97</td>
+              </tr>
+              <tr>
+                <td className="metric-name">Revenues</td>
+                <td>298.15</td>
+                <td>348.57</td>
+                <td>505.06</td>
+                <td className="total-highlight">1,151.78</td>
+              </tr>
+              <tr className="row-total">
+                <td className="metric-name">TOTAL</td>
+                <td className="pct-cell">69%</td>
+                <td className="pct-cell">57%</td>
+                <td className="pct-cell">62%</td>
+                <td className="pct-cell total-pct">62%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+/* ============================================================
+   ModalConstraintTab – Highway & Transit Modal Constraint View
+   ============================================================ */
+function ModalConstraintTab() {
+  const highwayData = {
+    cost: [204, 196, 309, 709],
+    revenue: [255, 299, 447, 1001],
+  };
+
+  const transitData = {
+    cost: [2.4, 2.9, 3.4, 8.6],
+    revenue: [43, 50, 58, 151],
+  };
+
+  const fmt = (v) => {
+    if (v === null || v === undefined) return '–';
+    return typeof v === 'number' ? v.toLocaleString('en-US') : v;
+  };
+
+  return (
+    <div className="fiscal-tab-sidebyside">
+      {/* Highway Table */}
+      <section className="fiscal-section highway-section">
+        <div className="fiscal-section-header">
+          <h3 className="fiscal-section-title mode-title">
+            <span className="mode-label">Mode:</span>
+            <span className="mode-badge badge-highway">Highway</span>
+          </h3>
+        </div>
+        <div className="fiscal-table-wrapper full-width">
+          <table className="fiscal-table">
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th>2033-38</th>
+                <th>2039-44</th>
+                <th>2045-50</th>
+                <th>TOTAL</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="metric-name">CLRP Projects Cost</td>
+                <td>{fmt(highwayData.cost[0])}</td>
+                <td>{fmt(highwayData.cost[1])}</td>
+                <td>{fmt(highwayData.cost[2])}</td>
+                <td className="total-highlight">{fmt(highwayData.cost[3])}</td>
+              </tr>
+              <tr>
+                <td className="metric-name">CLRP Revenue</td>
+                <td>{fmt(highwayData.revenue[0])}</td>
+                <td>{fmt(highwayData.revenue[1])}</td>
+                <td>{fmt(highwayData.revenue[2])}</td>
+                <td className="total-highlight">{fmt(highwayData.revenue[3])}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      {/* Transit Table */}
+      <section className="fiscal-section transit-section">
+        <div className="fiscal-section-header">
+          <h3 className="fiscal-section-title mode-title">
+            <span className="mode-label">Mode:</span>
+            <span className="mode-badge badge-transit">Transit</span>
+          </h3>
+        </div>
+        <div className="fiscal-table-wrapper full-width">
+          <table className="fiscal-table">
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th>2033-38</th>
+                <th>2039-44</th>
+                <th>2045-50</th>
+                <th>TOTAL</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="metric-name">CLRP Projects Cost</td>
+                <td>{fmt(transitData.cost[0])}</td>
+                <td>{fmt(transitData.cost[1])}</td>
+                <td>{fmt(transitData.cost[2])}</td>
+                <td className="total-highlight">{fmt(transitData.cost[3])}</td>
+              </tr>
+              <tr>
+                <td className="metric-name">CLRP Revenue</td>
+                <td>{fmt(transitData.revenue[0])}</td>
+                <td>{fmt(transitData.revenue[1])}</td>
+                <td>{fmt(transitData.revenue[2])}</td>
+                <td className="total-highlight">{fmt(transitData.revenue[3])}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
     </div>
   );
 }
@@ -613,6 +765,20 @@ function App() {
           >
             Utilization
           </button>
+          <button
+            id="tab-fiscal"
+            className={`nav-tab ${activeTab === 'fiscal' ? 'nav-tab-active' : ''}`}
+            onClick={() => setActiveTab('fiscal')}
+          >
+            Fiscal Constraint
+          </button>
+          <button
+            id="tab-modal"
+            className={`nav-tab ${activeTab === 'modal' ? 'nav-tab-active' : ''}`}
+            onClick={() => setActiveTab('modal')}
+          >
+            Highway and Transit
+          </button>
         </div>
       </nav>
 
@@ -626,6 +792,18 @@ function App() {
       {activeTab === 'report' && (
         <main className="app-container report-container">
           <ReportTab />
+        </main>
+      )}
+
+      {activeTab === 'fiscal' && (
+        <main className="app-container fiscal-container">
+          <FiscalConstraintTab />
+        </main>
+      )}
+
+      {activeTab === 'modal' && (
+        <main className="app-container fiscal-container">
+          <ModalConstraintTab />
         </main>
       )}
     </div>

@@ -6,7 +6,7 @@ export const BEFORE_PROJECTS = [
   { type: 'BikePed Improvements', cost: 85.54, count: 22, percent: 7 },
 ];
 
-export const BEFORE_TOTAL_COST = 1241.15;
+export const BEFORE_TOTAL_COST = 1241;
 export const BEFORE_PROFITS = 116;
 
 export const AFTER_PROJECTS = [
@@ -17,5 +17,5 @@ export const AFTER_PROJECTS = [
   { type: 'Ops & Safety Improvements', cost: 60.13, count: 23, percent: 8 },
 ];
 
-export const AFTER_TOTAL_COST = 709.33;
+export const AFTER_TOTAL_COST = 710;
 export const AFTER_PROFITS = 66;

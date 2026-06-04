@@ -217,7 +217,8 @@ function PieChartTab() {
   const AFTER_COLORS  = ['#34d399', '#34d399', '#34d399', '#34d399', '#34d399'];
 
   return (
-    <div className="pie-tab-layout">
+    <>
+      <div className="pie-tab-layout">
       {/* Sidebar on the Left */}
       <aside className="pie-sidebar">
         <div className="sidebar-group-title">Scenario</div>
@@ -318,6 +319,79 @@ function PieChartTab() {
         )}
       </div>
     </div>
+
+      {/* --- ADD THIS NEW SECTION BELOW pie-tab-layout --- */}
+      <section className="key-changes-section">
+        <h3 className="key-changes-title">Key Changes</h3>
+        
+        <div className="key-changes-grid">
+          {/* Left: Metrics Table */}
+          <div className="key-changes-card metrics-card">
+            <h4 className="card-subtitle">Metric Comparison</h4>
+            <div className="metrics-table-wrapper">
+              <table className="metrics-comparison-table">
+                <thead>
+                  <tr>
+                    <th>Metric</th>
+                    <th>Before</th>
+                    <th>After</th>
+                    <th>Change</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="metric-name">Total Cost</td>
+                    <td>$1,241</td>
+                    <td>$710</td>
+                    <td className="metric-change negative">-$532</td>
+                  </tr>
+                  <tr>
+                    <td className="metric-name">Total # of Projects</td>
+                    <td>116</td>
+                    <td>66</td>
+                    <td className="metric-change negative">-43%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Right: Shifts Categories */}
+          <div className="shifts-card-container">
+            <div className="shift-category-card dropped-card">
+              <div className="shift-header">
+                <span className="shift-badge badge-dropped">Dropped</span>
+              </div>
+              <ul className="shift-list">
+                <li>Shared Use Path</li>
+                <li>BikePed improvements</li>
+              </ul>
+            </div>
+
+            <div className="shift-category-card maintained-card">
+              <div className="shift-header">
+                <span className="shift-badge badge-maintained">Maintained</span>
+              </div>
+              <ul className="shift-list">
+                <li>Interchange Modification</li>
+                <li>Road Widening</li>
+                <li>Multimodal improvements</li>
+              </ul>
+            </div>
+
+            <div className="shift-category-card emerging-card">
+              <div className="shift-header">
+                <span className="shift-badge badge-emerging">Emerging</span>
+              </div>
+              <ul className="shift-list">
+                <li>Operational & Safety Improvements</li>
+                <li>Replacement/Rehabilitation</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }
 

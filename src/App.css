@@ -140,7 +140,7 @@ body {
 
 /* Sidebar Styles */
 .pie-sidebar {
-  width: 100px;
+  width: 180px;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
@@ -168,10 +168,10 @@ body {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: 6px;
-  padding: 6px 10px;
+  padding: 12px 16px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
   cursor: pointer;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   text-align: left;
@@ -200,8 +200,8 @@ body {
 
 /* Indicators */
 .btn-indicator {
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   flex-shrink: 0;
 }
@@ -221,7 +221,7 @@ body {
 }
 
 .btn-title {
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 600;
   color: var(--text-main);
 }
@@ -1039,7 +1039,7 @@ body {
   overflow: hidden;
 }
 
-.fiscal-tab-full {
+.fiscal-tab-combined {
   padding: 24px 32px 32px;
   max-width: 1600px;
   margin: 0 auto;
@@ -1047,31 +1047,67 @@ body {
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  gap: 24px;
   flex: 1;
   height: calc(100% - 48px);
 }
 
-.fiscal-tab-sidebyside {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+.fiscal-breakdown-row {
+  display: flex;
+  flex-direction: row;
   gap: 24px;
-  padding: 24px 32px 32px;
-  max-width: 1600px;
-  margin: 0 auto;
-  width: 100%;
-  box-sizing: border-box;
+  align-items: stretch;
   flex: 1;
-  height: calc(100% - 48px);
+  height: 100%;
+  width: 100%;
 }
 
 @media (max-width: 1024px) {
-  .fiscal-tab-sidebyside {
-    grid-template-columns: 1fr;
+  .fiscal-tab-combined {
     padding: 16px 20px 20px;
     gap: 16px;
     height: auto;
     overflow-y: auto;
   }
+  .fiscal-breakdown-row {
+    flex-direction: column;
+    gap: 16px;
+    height: auto;
+  }
+}
+
+.fiscal-sidebar {
+  width: 180px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: sticky;
+  top: 8px;
+}
+
+.fiscal-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.highway-dot {
+  background-color: #60a5fa;
+}
+
+.transit-dot {
+  background-color: #f472b6;
+}
+
+.sidebar-btn.active.btn-highway {
+  border-color: #60a5fa;
+}
+
+.sidebar-btn.active.btn-transit {
+  border-color: #f472b6;
 }
 
 .fiscal-section {

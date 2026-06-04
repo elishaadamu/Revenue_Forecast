@@ -584,12 +584,33 @@ function ReportTab() {
 }
 
 /* ============================================================
-   FiscalConstraintTab – Summary Fiscal Constraint View
+   FiscalConstraintTab – Summary Fiscal Constraint View + Modal tabs
    ============================================================ */
 function FiscalConstraintTab() {
+  const [activeSubTab, setActiveSubTab] = useState('highway');
+
+  const highwayData = {
+    cost: [204, 196, 309, 709],
+    revenue: [255, 299, 447, 1001],
+  };
+
+  const transitData = {
+    cost: [2.4, 2.9, 3.4, 8.6],
+    revenue: [43, 50, 58, 151],
+  };
+
+  const isHighway = activeSubTab === 'highway';
+  const activeModeData = isHighway ? highwayData : transitData;
+
+  const fmt = (v) => {
+    if (v === null || v === undefined) return '–';
+    return typeof v === 'number' ? v.toLocaleString('en-US') : v;
+  };
+
   return (
-    <div className="fiscal-tab-full">
-      <section className="fiscal-section">
+    <div className="fiscal-tab-combined">
+      {/* 1. Summary Fiscal Constraint (Top) */}
+      <section className="fiscal-section summary-section">
         <div className="fiscal-section-header">
           <h3 className="fiscal-section-title">Summary Fiscal Constraint</h3>
         </div>
@@ -631,108 +652,75 @@ function FiscalConstraintTab() {
           </table>
         </div>
       </section>
-    </div>
-  );
-}
 
-/* ============================================================
-   ModalConstraintTab – Highway & Transit Modal Constraint View
-   ============================================================ */
-function ModalConstraintTab() {
-  const highwayData = {
-    cost: [204, 196, 309, 709],
-    revenue: [255, 299, 447, 1001],
-  };
+      {/* 2. Mode Breakdown Sidebar & Table (Bottom) */}
+      <div className="fiscal-breakdown-row">
+        {/* Sidebar on the Left */}
+        <aside className="fiscal-sidebar">
+          <div className="sidebar-group-title">Mode</div>
+          <div className="sidebar-buttons">
+            <button
+              className={`sidebar-btn btn-highway ${isHighway ? 'active' : ''}`}
+              onClick={() => setActiveSubTab('highway')}
+            >
+              <span className="btn-indicator highway-dot"></span>
+              <span className="btn-title">Highway</span>
+            </button>
 
-  const transitData = {
-    cost: [2.4, 2.9, 3.4, 8.6],
-    revenue: [43, 50, 58, 151],
-  };
+            <button
+              className={`sidebar-btn btn-transit ${!isHighway ? 'active' : ''}`}
+              onClick={() => setActiveSubTab('transit')}
+            >
+              <span className="btn-indicator transit-dot"></span>
+              <span className="btn-title">Transit</span>
+            </button>
+          </div>
+        </aside>
 
-  const fmt = (v) => {
-    if (v === null || v === undefined) return '–';
-    return typeof v === 'number' ? v.toLocaleString('en-US') : v;
-  };
-
-  return (
-    <div className="fiscal-tab-sidebyside">
-      {/* Highway Table */}
-      <section className="fiscal-section highway-section">
-        <div className="fiscal-section-header">
-          <h3 className="fiscal-section-title mode-title">
-            <span className="mode-label">Mode:</span>
-            <span className="mode-badge badge-highway">Highway</span>
-          </h3>
+        {/* Main Content Area on the Right */}
+        <div className="fiscal-content">
+          <section className={`fiscal-section ${activeSubTab}-section`}>
+            <div className="fiscal-section-header">
+              <h3 className="fiscal-section-title mode-title">
+                <span className="mode-label">Mode:</span>
+                <span className={`mode-badge badge-${activeSubTab}`}>
+                  {isHighway ? 'Highway' : 'Transit'}
+                </span>
+              </h3>
+            </div>
+            
+            <div className="fiscal-table-wrapper full-width">
+              <table className="fiscal-table">
+                <thead>
+                  <tr>
+                    <th>Category</th>
+                    <th>2033-38</th>
+                    <th>2039-44</th>
+                    <th>2045-50</th>
+                    <th>TOTAL</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="metric-name">CLRP Projects Cost</td>
+                    <td>{fmt(activeModeData.cost[0])}</td>
+                    <td>{fmt(activeModeData.cost[1])}</td>
+                    <td>{fmt(activeModeData.cost[2])}</td>
+                    <td className="total-highlight">{fmt(activeModeData.cost[3])}</td>
+                  </tr>
+                  <tr>
+                    <td className="metric-name">CLRP Revenue</td>
+                    <td>{fmt(activeModeData.revenue[0])}</td>
+                    <td>{fmt(activeModeData.revenue[1])}</td>
+                    <td>{fmt(activeModeData.revenue[2])}</td>
+                    <td className="total-highlight">{fmt(activeModeData.revenue[3])}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
         </div>
-        <div className="fiscal-table-wrapper full-width">
-          <table className="fiscal-table">
-            <thead>
-              <tr>
-                <th>Category</th>
-                <th>2033-38</th>
-                <th>2039-44</th>
-                <th>2045-50</th>
-                <th>TOTAL</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="metric-name">CLRP Projects Cost</td>
-                <td>{fmt(highwayData.cost[0])}</td>
-                <td>{fmt(highwayData.cost[1])}</td>
-                <td>{fmt(highwayData.cost[2])}</td>
-                <td className="total-highlight">{fmt(highwayData.cost[3])}</td>
-              </tr>
-              <tr>
-                <td className="metric-name">CLRP Revenue</td>
-                <td>{fmt(highwayData.revenue[0])}</td>
-                <td>{fmt(highwayData.revenue[1])}</td>
-                <td>{fmt(highwayData.revenue[2])}</td>
-                <td className="total-highlight">{fmt(highwayData.revenue[3])}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      {/* Transit Table */}
-      <section className="fiscal-section transit-section">
-        <div className="fiscal-section-header">
-          <h3 className="fiscal-section-title mode-title">
-            <span className="mode-label">Mode:</span>
-            <span className="mode-badge badge-transit">Transit</span>
-          </h3>
-        </div>
-        <div className="fiscal-table-wrapper full-width">
-          <table className="fiscal-table">
-            <thead>
-              <tr>
-                <th>Category</th>
-                <th>2033-38</th>
-                <th>2039-44</th>
-                <th>2045-50</th>
-                <th>TOTAL</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="metric-name">CLRP Projects Cost</td>
-                <td>{fmt(transitData.cost[0])}</td>
-                <td>{fmt(transitData.cost[1])}</td>
-                <td>{fmt(transitData.cost[2])}</td>
-                <td className="total-highlight">{fmt(transitData.cost[3])}</td>
-              </tr>
-              <tr>
-                <td className="metric-name">CLRP Revenue</td>
-                <td>{fmt(transitData.revenue[0])}</td>
-                <td>{fmt(transitData.revenue[1])}</td>
-                <td>{fmt(transitData.revenue[2])}</td>
-                <td className="total-highlight">{fmt(transitData.revenue[3])}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
+      </div>
     </div>
   );
 }
@@ -772,13 +760,6 @@ function App() {
           >
             Fiscal Constraint
           </button>
-          <button
-            id="tab-modal"
-            className={`nav-tab ${activeTab === 'modal' ? 'nav-tab-active' : ''}`}
-            onClick={() => setActiveTab('modal')}
-          >
-            Highway and Transit
-          </button>
         </div>
       </nav>
 
@@ -798,12 +779,6 @@ function App() {
       {activeTab === 'fiscal' && (
         <main className="app-container fiscal-container">
           <FiscalConstraintTab />
-        </main>
-      )}
-
-      {activeTab === 'modal' && (
-        <main className="app-container fiscal-container">
-          <ModalConstraintTab />
         </main>
       )}
     </div>

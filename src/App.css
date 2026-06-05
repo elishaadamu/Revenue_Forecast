@@ -732,7 +732,7 @@ body {
 
 .gauge-val {
   font-family: 'Outfit', sans-serif;
-  font-size: 20px;
+  font-size: 28px;
   font-weight: 500;
   fill: var(--text-main);
 }

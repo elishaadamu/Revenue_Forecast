@@ -615,6 +615,41 @@ function FiscalConstraintTab() {
           <h3 className="fiscal-section-title">Summary Fiscal Constraint</h3>
         </div>
 
+        <div className="summary-highlight-grid" aria-label="Fiscal constraint summary highlights">
+          <article className="summary-highlight-card">
+            <span className="summary-highlight-label">2033–38</span>
+            <strong className="summary-highlight-value">69%</strong>
+            <div className="summary-meter" aria-label="2033–38 meter">
+              <span className="summary-meter-track" />
+              <span className="summary-meter-fill" style={{ width: '69%' }} />
+            </div>
+          </article>
+          <article className="summary-highlight-card">
+            <span className="summary-highlight-label">2039–44</span>
+            <strong className="summary-highlight-value">57%</strong>
+            <div className="summary-meter" aria-label="2039–44 meter">
+              <span className="summary-meter-track" />
+              <span className="summary-meter-fill" style={{ width: '57%' }} />
+            </div>
+          </article>
+          <article className="summary-highlight-card">
+            <span className="summary-highlight-label">2045–50</span>
+            <strong className="summary-highlight-value">62%</strong>
+            <div className="summary-meter" aria-label="2045–50 meter">
+              <span className="summary-meter-track" />
+              <span className="summary-meter-fill" style={{ width: '62%' }} />
+            </div>
+          </article>
+          <article className="summary-highlight-card summary-highlight-card-total">
+            <span className="summary-highlight-label">TOTAL</span>
+            <strong className="summary-highlight-value summary-highlight-value-total">62%</strong>
+            <div className="summary-meter summary-meter-total" aria-label="TOTAL meter">
+              <span className="summary-meter-track" />
+              <span className="summary-meter-fill summary-meter-fill-total" style={{ width: '62%' }} />
+            </div>
+          </article>
+        </div>
+
         <div className="fiscal-table-wrapper full-width">
           <table className="fiscal-table">
             <thead>
@@ -643,10 +678,10 @@ function FiscalConstraintTab() {
               </tr>
               <tr className="row-total">
                 <td className="metric-name">TOTAL</td>
-                <td className="pct-cell">69%</td>
-                <td className="pct-cell">57%</td>
-                <td className="pct-cell">62%</td>
-                <td className="pct-cell total-pct">62%</td>
+                <td className="pct-cell"><span className="pct-pill">69%</span></td>
+                <td className="pct-cell"><span className="pct-pill">57%</span></td>
+                <td className="pct-cell"><span className="pct-pill">62%</span></td>
+                <td className="pct-cell total-pct"><span className="pct-pill pct-pill-total">62%</span></td>
               </tr>
             </tbody>
           </table>

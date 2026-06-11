@@ -202,10 +202,10 @@ function GaugeChart({ pct = 0, value = '', sublabel = '', label = '', color = '#
 }
 
 /* ============================================================
-   PieChartTab – 10 Circle Dials for Before & After metrics
+   PieChartTab – Circle Dials for After metrics
    ============================================================ */
 function PieChartTab() {
-  const [activeSubTab, setActiveSubTab] = useState('before');
+  const [activeSubTab, setActiveSubTab] = useState('after');
 
   const fmt = (v) => {
     if (v === null || v === undefined) return '–';
@@ -217,8 +217,6 @@ function PieChartTab() {
       : v;
   };
 
-  // Consistent blue for Before, consistent green for After
-  const BEFORE_COLORS = ['#60a5fa', '#60a5fa', '#60a5fa', '#60a5fa', '#60a5fa'];
   const AFTER_COLORS  = ['#34d399', '#34d399', '#34d399', '#34d399', '#34d399'];
 
   return (
@@ -229,15 +227,7 @@ function PieChartTab() {
         <div className="sidebar-group-title">Scenario</div>
         <div className="sidebar-buttons">
           <button
-            className={`sidebar-btn btn-before ${activeSubTab === 'before' ? 'active' : ''}`}
-            onClick={() => setActiveSubTab('before')}
-          >
-            <span className="btn-indicator before-dot"></span>
-            <span className="btn-title">Before</span>
-          </button>
-          
-          <button
-            className={`sidebar-btn btn-after ${activeSubTab === 'after' ? 'active' : ''}`}
+            className={`sidebar-btn btn-after active`}
             onClick={() => setActiveSubTab('after')}
           >
             <span className="btn-indicator after-dot"></span>
@@ -248,149 +238,43 @@ function PieChartTab() {
 
       {/* Main content area on the Right */}
       <div className="pie-content">
-        {activeSubTab === 'before' ? (
-          /* ── BEFORE STATES PANEL ── */
-          <section className="pie-section before-section">
-            <div className="pie-section-header">
-              <div style={{ display: 'flex', gap: '12px' }}>
-                <div className="section-meta-pill">Total Cost: ${fmt(BEFORE_TOTAL_COST)}M</div>
-                <div className="section-meta-pill" style={{ backgroundColor: 'rgba(52, 211, 153, 0.15)', color: '#34d399', border: '1px solid rgba(52, 211, 153, 0.3)' }}>Projects: {BEFORE_PROFITS}</div>
-              </div>
+        {/* ── AFTER STATES PANEL ── */}
+        <section className="pie-section after-section">
+          <div className="pie-section-header">
+            <div style={{ display: 'flex', gap: '12px' }}>
+              <div className="section-meta-pill">Total Cost: ${fmt(AFTER_TOTAL_COST)}M</div>
+              <div className="section-meta-pill" style={{ backgroundColor: 'rgba(52, 211, 153, 0.15)', color: '#34d399', border: '1px solid rgba(52, 211, 153, 0.3)' }}>Projects: {AFTER_PROFITS}</div>
             </div>
+          </div>
 
-            {/* 5 Speedometers for Before */}
-            <div className="pie-grid">
-              {BEFORE_PROJECTS.map((item, idx) => {
-                const color = BEFORE_COLORS[idx % BEFORE_COLORS.length];
-                return (
-                  <div key={item.type} className="pie-card before-card" style={{ '--accent-color': color }}>
-                    <div className="pie-card-header">
-                      <span className="pie-card-title">{item.type}</span>
-                    </div>
-                    <div className="pie-card-body">
-                      <GaugeChart
-                        isPieChartDial={true}
-                        pct={item.percent}
-                        count={item.count}
-                        sublabel="before_count"
-                        color={color}
-                        label={item.type}
-                      />
-                    </div>
+          {/* 5 Speedometers for After */}
+          <div className="pie-grid">
+            {AFTER_PROJECTS.map((item, idx) => {
+              const color = AFTER_COLORS[idx % AFTER_COLORS.length];
+              return (
+                <div key={item.type} className="pie-card after-card" style={{ '--accent-color': color }}>
+                  <div className="pie-card-header">
+                    <span className="pie-card-title">{item.type}</span>
                   </div>
-                );
-              })}
-            </div>
-          </section>
-        ) : (
-          /* ── AFTER STATES PANEL ── */
-          <section className="pie-section after-section">
-            <div className="pie-section-header">
-              <div style={{ display: 'flex', gap: '12px' }}>
-                <div className="section-meta-pill">Total Cost: ${fmt(AFTER_TOTAL_COST)}M</div>
-                <div className="section-meta-pill" style={{ backgroundColor: 'rgba(52, 211, 153, 0.15)', color: '#34d399', border: '1px solid rgba(52, 211, 153, 0.3)' }}>Projects: {AFTER_PROFITS}</div>
-              </div>
-            </div>
-
-            {/* 5 Speedometers for After */}
-            <div className="pie-grid">
-              {AFTER_PROJECTS.map((item, idx) => {
-                const color = AFTER_COLORS[idx % AFTER_COLORS.length];
-                return (
-                  <div key={item.type} className="pie-card after-card" style={{ '--accent-color': color }}>
-                    <div className="pie-card-header">
-                      <span className="pie-card-title">{item.type}</span>
-                    </div>
-                    <div className="pie-card-body">
-                      <GaugeChart
-                        isPieChartDial={true}
-                        pct={item.percent}
-                        count={item.count}
-                        sublabel="after_count"
-                        color={color}
-                        label={item.type}
-                      />
-                    </div>
+                  <div className="pie-card-body">
+                    <GaugeChart
+                      isPieChartDial={true}
+                      pct={item.percent}
+                      count={item.count}
+                      sublabel="after_count"
+                      color={color}
+                      label={item.type}
+                    />
                   </div>
-                );
-              })}
-            </div>
-          </section>
-        )}
+                </div>
+              );
+            })}
+          </div>
+        </section>
       </div>
     </div>
 
-      {/* --- ADD THIS NEW SECTION BELOW pie-tab-layout --- */}
-      <section className="key-changes-section">
-        <h3 className="key-changes-title">Key Changes</h3>
-        
-        <div className="key-changes-grid">
-          {/* Left: Metrics Table */}
-          <div className="key-changes-card metrics-card">
-            <h4 className="card-subtitle">Metric Comparison</h4>
-            <div className="metrics-table-wrapper">
-              <table className="metrics-comparison-table">
-                <thead>
-                  <tr>
-                    <th>Metric</th>
-                    <th>Before</th>
-                    <th>After</th>
-                    <th>Change</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td className="metric-name">Total Cost</td>
-                    <td>${fmt(BEFORE_TOTAL_COST)}</td>
-                    <td>${fmt(AFTER_TOTAL_COST)}</td>
-                    <td className="metric-change negative">-${fmt(BEFORE_TOTAL_COST - AFTER_TOTAL_COST)}</td>
-                  </tr>
-                  <tr>
-                    <td className="metric-name">Total # of Projects</td>
-                    <td>116</td>
-                    <td>66</td>
-                    <td className="metric-change negative">-43%</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
 
-          {/* Right: Shifts Categories */}
-          <div className="shifts-card-container">
-            <div className="shift-category-card dropped-card">
-              <div className="shift-header">
-                <span className="shift-badge badge-dropped">Dropped</span>
-              </div>
-              <ul className="shift-list">
-                <li>Shared Use Path</li>
-                <li>BikePed improvements</li>
-              </ul>
-            </div>
-
-            <div className="shift-category-card maintained-card">
-              <div className="shift-header">
-                <span className="shift-badge badge-maintained">Maintained</span>
-              </div>
-              <ul className="shift-list">
-                <li>Interchange Modification</li>
-                <li>Road Widening</li>
-                <li>Multimodal improvements</li>
-              </ul>
-            </div>
-
-            <div className="shift-category-card emerging-card">
-              <div className="shift-header">
-                <span className="shift-badge badge-emerging">Emerging</span>
-              </div>
-              <ul className="shift-list">
-                <li>Operational & Safety Improvements</li>
-                <li>Replacement/Rehabilitation</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
     </>
   );
 }
